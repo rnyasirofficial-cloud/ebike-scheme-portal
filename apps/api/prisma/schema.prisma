@@ -1,0 +1,239 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id             String        @id @default(uuid())
+  cnic           String        @unique
+  fullName       String
+  email          String        @unique
+  mobile         String        @unique
+  role           String        @default("STUDENT") // STUDENT, COORDINATOR, ADMIN, DEALER, SUPPORT_AGENT
+  passwordHash   String
+  isVerified     Boolean       @default(false)
+  universityId   String?
+  university     University?   @relation(fields: [universityId], references: [id])
+  applications   Application[] @relation("StudentApplications")
+  verifiedApps   Application[] @relation("CoordinatorVerifications")
+  supportTickets SupportTicket[]
+  notifications  Notification[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model University {
+  id             String        @id @default(uuid())
+  name           String        @unique
+  city           String
+  sector         String        // Public or Private
+  province       String        @default("Punjab")
+  hecRecognized  Boolean       @default(true)
+  hecReferenceNo String?
+  isActive       Boolean       @default(true)
+  users          User[]
+  applications   Application[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model Application {
+  id                     String           @id @default(uuid())
+  applicationNo          String           @unique
+  studentId              String
+  student                User             @relation("StudentApplications", fields: [studentId], references: [id])
+  universityId           String
+  university             University       @relation(fields: [universityId], references: [id])
+  
+  // Personal & Verification Fields
+  dob                    String
+  gender                 String
+  fatherName             String
+  address                String
+  domicileDistrict       String
+  licenseNumber          String
+  licenseType            String           // LEARNER or PERMANENT
+  licenseExpiry          String
+  
+  // University & Academic Info
+  degreeProgram          String
+  rollNumber             String
+  currentSemester        Int
+  cgpa                   Float?
+  attendanceRate         Float
+  isRegularStudent       Boolean          @default(true)
+  hasProbation           Boolean          @default(false)
+  
+  // Financial
+  bankIban               String?
+  walletType             String           @default("BANK_ACCOUNT")
+  walletNumber           String?
+  householdMonthlyIncome Float
+  isDifferentlyAbled     Boolean          @default(false)
+  signatureName          String
+  
+  // Workflow Status
+  status                 String           @default("SUBMITTED") // SUBMITTED, VERIFIED, REJECTED, SELECTED, ALLOCATED, DELIVERED
+  rejectionReason        String?
+  rejectionRemarks       String?
+  verifiedAt             DateTime?
+  verifiedById           String?
+  verifiedBy             User?            @relation("CoordinatorVerifications", fields: [verifiedById], references: [id])
+  selectedAt             DateTime?
+  lotteryDrawId          String?
+  
+  // Relations
+  documents              Document[]
+  payments               Payment[]
+  bikeAllocation         BikeAllocation?
+  supportTickets         SupportTicket[]
+  
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
+}
+
+model Document {
+  id            String       @id @default(uuid())
+  applicationId String
+  application   Application  @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  docType       String       // CNIC_FRONT, CNIC_BACK, DOMICILE, LICENSE, STUDENT_CARD, ATTESTATION
+  filePath      String
+  originalName  String
+  mimeType      String
+  size          Int
+  status        String       @default("UPLOADED") // UPLOADED, VERIFIED, REJECTED
+  verifiedAt    DateTime?
+  createdAt     DateTime     @default(now())
+}
+
+model Payment {
+  id                String       @id @default(uuid())
+  applicationId     String
+  application       Application  @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  amount            Float
+  installmentNumber Int
+  dueDate           DateTime
+  paidDate          DateTime?
+  status            String       @default("PENDING") // PENDING, PAID, OVERDUE
+  transactionRef    String?
+  createdAt         DateTime     @default(now())
+}
+
+model BikeAllocation {
+  id                  String       @id @default(uuid())
+  applicationId       String       @unique
+  application         Application  @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  dealerId            String?
+  centerName          String
+  bikeModel           String       @default("Roadmaster E-Glide 1000")
+  frameNumber         String?
+  batterySerialNumber String?
+  registrationNumber  String?
+  qrCodeToken         String       @unique
+  status              String       @default("ALLOCATED") // ALLOCATED, DELIVERED
+  handoverDate        DateTime?
+  remarks             String?
+  createdAt           DateTime     @default(now())
+}
+
+model SchemeConfig {
+  id                 String   @id @default("default-config")
+  selectionMode      String   @default("LOTTERY") // FCFS, MERIT_SCORE, LOTTERY
+  subsidyPercentage  Float    @default(50.0)
+  maxQuota           Int      @default(10000)
+  installmentMonths  Int      @default(24)
+  monthlyInstallment Float    @default(4500)
+  isActive           Boolean  @default(true)
+  updatedAt          DateTime @updatedAt
+}
+
+model SupportTicket {
+  id            String       @id @default(uuid())
+  userId        String
+  user          User         @relation(fields: [userId], references: [id])
+  applicationId String?
+  application   Application? @relation(fields: [applicationId], references: [id])
+  subject       String
+  message       String
+  priority      String       @default("NORMAL") // LOW, NORMAL, HIGH, URGENT
+  status        String       @default("OPEN")   // OPEN, IN_PROGRESS, RESOLVED
+  response      String?
+  resolvedAt    DateTime?
+  createdAt     DateTime     @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  type      String   @default("INFO") // INFO, SUCCESS, WARNING, ACTION
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id          String   @id @default(uuid())
+  entity      String
+  entityId    String
+  action      String
+  performedBy String
+  detailsJson String?
+  timestamp   DateTime @default(now())
+}
+
+model LotteryDraw {
+  id                   String   @id @default(uuid())
+  mode                 String
+  totalSelected        Int
+  executedBy           String
+  anonymizedResultsJson String
+  createdAt            DateTime @default(now())
+}
+
+model DealershipCenter {
+  id             String   @id @default(uuid())
+  name           String   @unique
+  city           String
+  address        String
+  contactPerson  String
+  phone          String
+  email          String
+  active         Boolean  @default(true)
+  quota          Int      @default(1000)
+  deliveredCount Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model BikeModel {
+  id            String   @id @default(uuid())
+  name          String   @unique
+  brand         String
+  batteryType   String   @default("Lithium-Ion 72V")
+  rangeKm       Int      @default(85)
+  topSpeedKmh   Int      @default(65)
+  warrantyYears Int      @default(3)
+  retailPrice   Float    @default(216000)
+  govtGrant     Float    @default(108000)
+  studentShare  Float    @default(108000)
+  inStock       Int      @default(2500)
+  imageUrl      String?  @default("/ebike-hero.jpg")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model RegistryLog {
+  id           String   @id @default(uuid())
+  registryName String   // NADRA, EXCISE, HEC, DOMICILE, PITB
+  identifier   String   // CNIC, License No, Roll No, Domicile No
+  isVerified   Boolean  @default(true)
+  rawResponse  String?
+  checkedAt    DateTime @default(now())
+}
+

@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-green: #1FA37B;        /* eco green */
+  --color-blue: #1565C0;         /* trust blue */
+  --color-teal: #0E8C82;         /* primary blended color */
+  --color-teal-dark: #0A6E66;
+  --gradient-primary: linear-gradient(135deg, #1FA37B 0%, #0E8C82 45%, #1565C0 100%);
+  --gradient-bg-soft: linear-gradient(160deg, #E4F5F1 0%, #EAF3F8 50%, #E8F0FB 100%);
+  --tint-green: #E4F5F1;
+  --tint-blue: #E8F0FB;
+  --text-slate: #3B3F45;
+}
+
+.dark {
+  --color-green: #178263;
+  --color-blue: #13539e;
+  --color-teal: #0c736a;
+  --color-teal-dark: #07524c;
+  --gradient-primary: linear-gradient(135deg, #0f3d32 0%, #0a3330 45%, #0e2947 100%);
+  --gradient-bg-soft: linear-gradient(160deg, #0b1716 0%, #0e171c 50%, #101622 100%);
+  --tint-green: #122822;
+  --tint-blue: #132130;
+  --text-slate: #e2e8f0;
+}
+
+body {
+  background: var(--gradient-bg-soft);
+  min-height: 100vh;
+  color: var(--text-slate);
+  font-family: var(--font-lora), 'Lora', Georgia, Cambria, 'Times New Roman', Times, serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom UI utilities matching Section 3 design requirements */
+.bg-gradient-chrome {
+  background: var(--gradient-primary);
+  color: #ffffff;
+}
+
+.kpi-card-green {
+  background-color: var(--tint-green);
+  border-left: 4px solid var(--color-teal);
+}
+
+.kpi-card-blue {
+  background-color: var(--tint-blue);
+  border-left: 4px solid var(--color-blue);
+}
+
+.btn-primary-gradient {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary-gradient:hover {
+  opacity: 0.94;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(14, 140, 130, 0.35);
+}
+
+/* Urdu typography enhancement */
+[dir="rtl"] {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Urdu Typesetting', 'Inter', sans-serif;
+}

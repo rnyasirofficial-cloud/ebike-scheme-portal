@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: ebike_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ebike_user
+      POSTGRES_PASSWORD: ebike_secure_password_2026
+      POSTGRES_DB: ebike_scheme_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Web-based visual Database Explorer & Management Tool
+  adminer:
+    image: adminer:latest
+    container_name: ebike_adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+

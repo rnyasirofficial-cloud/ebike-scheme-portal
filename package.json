@@ -1,0 +1,20 @@
+{
+  "name": "ebike-scheme-portal",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:api": "npm.cmd run dev --prefix apps/api",
+    "dev:web": "npm.cmd run dev --prefix apps/web",
+    "build:shared": "npm.cmd run build --prefix packages/shared",
+    "build:api": "npm.cmd run build --prefix apps/api",
+    "build:web": "npm.cmd run build --prefix apps/web",
+    "test:api": "npm.cmd test --prefix apps/api"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
+  }
+}
