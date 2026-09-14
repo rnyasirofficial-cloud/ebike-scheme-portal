@@ -5,27 +5,33 @@
 @tailwind utilities;
 
 :root {
-  --color-green: #1FA37B;        /* eco green */
-  --color-blue: #1565C0;         /* trust blue */
-  --color-teal: #0E8C82;         /* primary blended color */
+  --color-green: #1FA37B;
+  --color-blue: #1565C0;
+  --color-teal: #0E8C82;
   --color-teal-dark: #0A6E66;
   --gradient-primary: linear-gradient(135deg, #1FA37B 0%, #0E8C82 45%, #1565C0 100%);
   --gradient-bg-soft: linear-gradient(160deg, #E4F5F1 0%, #EAF3F8 50%, #E8F0FB 100%);
   --tint-green: #E4F5F1;
   --tint-blue: #E8F0FB;
   --text-slate: #3B3F45;
+  --navbar-h: 3.5rem;   /* 56px on mobile (h-14) */
 }
 
-.dark {
-  --color-green: #178263;
-  --color-blue: #13539e;
-  --color-teal: #0c736a;
-  --color-teal-dark: #07524c;
-  --gradient-primary: linear-gradient(135deg, #0f3d32 0%, #0a3330 45%, #0e2947 100%);
-  --gradient-bg-soft: linear-gradient(160deg, #0b1716 0%, #0e171c 50%, #101622 100%);
-  --tint-green: #122822;
-  --tint-blue: #132130;
-  --text-slate: #e2e8f0;
+@media (min-width: 640px) {
+  :root { --navbar-h: 5rem; } /* 80px on sm+ (h-20) */
+}
+
+/* ── Base resets for responsive correctness ─────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;      /* prevent horizontal page scroll */
+  -webkit-text-size-adjust: 100%; /* prevent iOS font inflation */
 }
 
 body {
@@ -34,9 +40,11 @@ body {
   color: var(--text-slate);
   font-family: var(--font-lora), 'Lora', Georgia, Cambria, 'Times New Roman', Times, serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-/* Custom UI utilities matching Section 3 design requirements */
+/* ── Custom design system utilities ─────────────────────────── */
 .bg-gradient-chrome {
   background: var(--gradient-primary);
   color: #ffffff;
@@ -64,7 +72,37 @@ body {
   box-shadow: 0 4px 14px rgba(14, 140, 130, 0.35);
 }
 
-/* Urdu typography enhancement */
+/* ── Touch target sizing — all interactive elements ≥44px tall ─ */
+button, a, [role="button"] {
+  min-height: 36px;
+}
+
+/* ── Hide scrollbar but keep scroll behavior ─────────────────── */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Sidebar height using CSS custom property ─────────────────── */
+.sidebar-height {
+  min-height: calc(100vh - var(--navbar-h));
+}
+
+/* ── Responsive text clamp utility ───────────────────────────── */
+.line-clamp-1 { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
+.line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+
+/* ── RTL typography ──────────────────────────────────────────── */
 [dir="rtl"] {
   font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Urdu Typesetting', 'Inter', sans-serif;
 }
+
+/* ── Print utilities ─────────────────────────────────────────── */
+@media print {
+  nav, aside, .no-print { display: none !important; }
+  body { background: white; }
+}
+

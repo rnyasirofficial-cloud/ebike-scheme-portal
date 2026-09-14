@@ -173,52 +173,52 @@ export default function StudentDashboardPage() {
   ];
 
   return (
-    <div className="flex-1 flex bg-[#EAF3F8]/50 min-h-[calc(100vh-4rem)]">
+    <div className="flex-1 flex bg-[#EAF3F8]/50 sidebar-height">
       {/* Flagship Teal Sidebar matching Section 3 and Figure 1 */}
       <Sidebar activeTab={activeTab} onTabChange={switchTab} />
 
-      {/* Main Student Workspace */}
-      <div className="flex-1 p-4 sm:p-8 max-w-7xl mx-auto space-y-6 overflow-y-auto">
-        {/* Top Welcome Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
-                Verified Student
-              </span>
-              <span className="text-xs text-slate-500 font-mono">
-                Roll# {application?.rollNumber || 'BSCS-2023-114'}
-              </span>
-            </div>
-            <h1 className="text-2xl font-extrabold text-slate-900 mt-1">
-              Welcome, {user?.fullName || 'Ali Raza'}
-            </h1>
-            <p className="text-xs text-slate-500">
-              {application?.university?.name || 'University of the Punjab — Lahore'}
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3">
-            {!application ? (
-              <Link
-                href="/student/apply"
-                className="px-5 py-2.5 rounded-xl font-bold text-xs text-white btn-primary-gradient shadow-md flex items-center gap-2"
-              >
-                <FileText className="w-4 h-4" />
-                <span>Submit Application</span>
-              </Link>
-            ) : (
-              <div className="text-right">
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-                  Tracking Number
-                </div>
-                <div className="text-sm font-mono font-extrabold text-[#0E8C82]">
-                  {application.applicationNo}
-                </div>
+        {/* Main Student Workspace */}
+        <div className="flex-1 p-3 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-4 sm:space-y-6 overflow-y-auto min-w-0">
+          {/* Top Welcome Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-100">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                  Verified Student
+                </span>
+                <span className="text-xs text-slate-500 font-mono hidden xs:inline">
+                  Roll# {application?.rollNumber || 'BSCS-2023-114'}
+                </span>
               </div>
-            )}
+              <h1 className="text-lg sm:text-2xl font-extrabold text-slate-900 mt-1 leading-tight">
+                Welcome, {user?.fullName || 'Ali Raza'}
+              </h1>
+              <p className="text-xs text-slate-500">
+                {application?.university?.name || 'University of the Punjab — Lahore'}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              {!application ? (
+                <Link
+                  href="/student/apply"
+                  className="px-4 py-2 rounded-xl font-bold text-xs text-white btn-primary-gradient shadow-md flex items-center gap-2"
+                >
+                  <FileText className="w-4 h-4" />
+                  <span>Submit Application</span>
+                </Link>
+              ) : (
+                <div className="text-right">
+                  <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                    Tracking Number
+                  </div>
+                  <div className="text-sm font-mono font-extrabold text-[#0E8C82]">
+                    {application.applicationNo}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
 
         {/* Mobile / Quick Horizontal Tab Navigation Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">

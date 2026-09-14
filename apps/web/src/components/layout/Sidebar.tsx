@@ -35,7 +35,7 @@ export default function Sidebar({ activeTab, onTabChange }: SidebarProps) {
   ];
 
   return (
-    <aside className="w-64 bg-[#0A6E66] text-white flex-shrink-0 shadow-lg min-h-[calc(100vh-4rem)] flex flex-col justify-between hidden md:flex">
+    <aside className="w-56 lg:w-64 bg-[#0A6E66] text-white flex-shrink-0 shadow-lg sidebar-height flex flex-col justify-between hidden md:flex">
       <div className="p-4 space-y-6">
         <div className="px-3 py-2 bg-white/10 rounded-xl">
           <div className="text-xs uppercase tracking-wider text-emerald-200 font-semibold">
