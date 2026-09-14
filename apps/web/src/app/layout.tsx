@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Lora } from 'next/font/google';
 import '@/styles/globals.css';
 import { AuthProvider } from '@/lib/auth-context';
@@ -9,6 +9,13 @@ const lora = Lora({
   variable: '--font-lora',
   display: 'swap',
 });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#0E8C82',
+};
 
 export const metadata: Metadata = {
   title: 'Chief Minister Punjab E-Bike Scheme Portal | Government of Punjab',

@@ -87,25 +87,28 @@ export default function LandingPage() {
             {/* Left Hero Column */}
             <div className="lg:col-span-7 space-y-6">
               {/* Official Ribbon Badge with CM Maryam Nawaz Animated Avatar */}
-              <div className="inline-flex items-center gap-3 pr-4 pl-1.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-xs font-semibold text-emerald-100 shadow-md">
+              <div className="inline-flex items-center gap-2 pr-3 pl-1.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-xs font-semibold text-emerald-100 shadow-md max-w-full">
                 <img
                   src="/cm-maryam-avatar.jpg"
                   alt="Chief Minister Maryam Nawaz Sharif"
-                  className="w-8 h-8 rounded-full object-cover ring-2 ring-emerald-300/80 shadow-sm"
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover ring-2 ring-emerald-300/80 shadow-sm flex-shrink-0"
                 />
-                <div className="flex items-center gap-2">
-                  <span>Chief Minister Maryam Nawaz Sharif Vision</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-300"></span>
-                  <span className="px-2 py-0.5 rounded-full bg-white/20 text-[10px] uppercase font-bold tracking-wider text-white">
+                <div className="flex flex-wrap items-center gap-1 sm:gap-2 min-w-0">
+                  <span className="text-[10px] sm:text-xs leading-tight">CM Maryam Nawaz Sharif Vision</span>
+                  <span className="hidden sm:inline w-1.5 h-1.5 rounded-full bg-emerald-300 flex-shrink-0"></span>
+                  <span className="px-1.5 sm:px-2 py-0.5 rounded-full bg-white/20 text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-white flex-shrink-0">
                     2026 Phase-I
                   </span>
                 </div>
               </div>
 
-              {/* Main Headline in Majestic Lora Typography */}
+              {/* Main Headline */}
               <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-medium tracking-normal leading-snug text-white">
-                Empowering Students <br className="hidden sm:inline" />
-                with <span className="text-emerald-200">Green Mobility</span>
+                Empowering Students{' '}
+                <span className="sm:hidden">with </span>
+                <br className="hidden sm:inline" />
+                <span className="hidden sm:inline">with </span>
+                <span className="text-emerald-200">Green Mobility</span>
               </h1>
 
               {/* Subtitle / Lead Paragraph */}
@@ -134,33 +137,35 @@ export default function LandingPage() {
                 </Link>
               </div>
 
-              {/* 3 Metric Cards in Frosted Glass */}
-              <div className="pt-2 grid grid-cols-3 gap-3 max-w-lg">
-                <div className="p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-sm">
-                  <div className="flex items-center gap-1.5 text-emerald-200 text-xs font-semibold">
-                    <Percent className="w-3.5 h-3.5" />
-                    <span>Govt Grant</span>
+              {/* 3 Metric Cards */}
+              <div className="pt-2 grid grid-cols-3 gap-2 sm:gap-3 w-full">
+                <div className="p-2 sm:p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-sm">
+                  <div className="flex items-center gap-1 text-emerald-200 text-[10px] sm:text-xs font-semibold">
+                    <Percent className="w-3 h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0" />
+                    <span className="hidden xs:inline">Govt Grant</span>
+                    <span className="xs:hidden">Grant</span>
                   </div>
-                  <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-white">50%</div>
-                  <div className="text-[11px] text-emerald-100/80">Direct Subsidy</div>
+                  <div className="mt-1 font-serif text-lg sm:text-2xl font-bold text-white">50%</div>
+                  <div className="text-[9px] sm:text-[11px] text-emerald-100/80 leading-tight">Direct Subsidy</div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-sm">
-                  <div className="flex items-center gap-1.5 text-emerald-200 text-xs font-semibold">
-                    <CreditCard className="w-3.5 h-3.5" />
+                <div className="p-2 sm:p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-sm">
+                  <div className="flex items-center gap-1 text-emerald-200 text-[10px] sm:text-xs font-semibold">
+                    <CreditCard className="w-3 h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0" />
                     <span>Monthly</span>
                   </div>
-                  <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-white">Rs. 4,500</div>
-                  <div className="text-[11px] text-emerald-100/80">Zero Mark-up</div>
+                  <div className="mt-1 font-serif text-base sm:text-2xl font-bold text-white leading-tight">Rs.4,500</div>
+                  <div className="text-[9px] sm:text-[11px] text-emerald-100/80 leading-tight">Zero Mark-up</div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-sm">
-                  <div className="flex items-center gap-1.5 text-emerald-200 text-xs font-semibold">
-                    <Bike className="w-3.5 h-3.5" />
-                    <span>Total Quota</span>
+                <div className="p-2 sm:p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-sm">
+                  <div className="flex items-center gap-1 text-emerald-200 text-[10px] sm:text-xs font-semibold">
+                    <Bike className="w-3 h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0" />
+                    <span className="hidden xs:inline">Total Quota</span>
+                    <span className="xs:hidden">Quota</span>
                   </div>
-                  <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-white">10,000+</div>
-                  <div className="text-[11px] text-emerald-100/80">Punjab Students</div>
+                  <div className="mt-1 font-serif text-lg sm:text-2xl font-bold text-white">10K+</div>
+                  <div className="text-[9px] sm:text-[11px] text-emerald-100/80 leading-tight">Punjab Students</div>
                 </div>
               </div>
             </div>
@@ -355,42 +360,42 @@ export default function LandingPage() {
             </div>
 
             <div className="lg:col-span-7">
-              <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-200/80 space-y-5">
-                <div className="flex justify-between items-center pb-4 border-b border-slate-100">
+              <div className="bg-white rounded-3xl p-5 sm:p-8 shadow-xl border border-slate-200/80 space-y-4 sm:space-y-5">
+                <div className="flex justify-between items-center pb-3 sm:pb-4 border-b border-slate-100 gap-2">
                   <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
                     Total E-Bike Retail Price
                   </span>
-                  <span className="font-serif text-xl font-bold text-slate-900">
+                  <span className="font-serif text-lg sm:text-xl font-bold text-slate-900 whitespace-nowrap">
                     Rs. 216,000
                   </span>
                 </div>
 
-                <div className="flex justify-between items-center pb-4 border-b border-slate-100 text-emerald-700">
+                <div className="flex justify-between items-center pb-3 sm:pb-4 border-b border-slate-100 text-emerald-700 gap-2">
                   <span className="text-xs font-bold uppercase tracking-wider">
-                    Punjab Govt Subsidy Grant (50%)
+                    Govt Subsidy (50%)
                   </span>
-                  <span className="font-serif text-xl font-bold">
-                    - Rs. 108,000 (Free)
+                  <span className="font-serif text-lg sm:text-xl font-bold whitespace-nowrap">
+                    - Rs. 108,000
                   </span>
                 </div>
 
-                <div className="flex justify-between items-center pb-4 border-b border-slate-100 text-[#1565C0]">
+                <div className="flex justify-between items-center pb-3 sm:pb-4 border-b border-slate-100 text-[#1565C0] gap-2">
                   <span className="text-xs font-bold uppercase tracking-wider">
-                    Net Student Loan Principal
+                    Net Student Loan
                   </span>
-                  <span className="font-serif text-xl font-bold">
+                  <span className="font-serif text-lg sm:text-xl font-bold whitespace-nowrap">
                     Rs. 108,000
                   </span>
                 </div>
 
-                <div className="p-5 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-between">
+                <div className="p-4 sm:p-5 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-between gap-3">
                   <div>
                     <span className="text-xs font-bold text-emerald-900 uppercase tracking-wider block">
-                      Monthly Installment (24 Months)
+                      Monthly (24 Months)
                     </span>
-                    <span className="text-[11px] text-emerald-700">Due 1st of each calendar month</span>
+                    <span className="text-[10px] sm:text-[11px] text-emerald-700">Due 1st of each month • 0% markup</span>
                   </div>
-                  <span className="font-serif text-3xl font-extrabold text-[#0A6E66]">
+                  <span className="font-serif text-2xl sm:text-3xl font-extrabold text-[#0A6E66] whitespace-nowrap">
                     Rs. 4,500
                   </span>
                 </div>

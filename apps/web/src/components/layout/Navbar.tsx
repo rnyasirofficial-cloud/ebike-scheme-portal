@@ -11,24 +11,25 @@ export default function Navbar() {
 
   return (
     <nav className="bg-gradient-chrome border-b border-white/15 shadow-lg sticky top-0 z-50 backdrop-blur-md transition-all">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 sm:h-20">
           {/* Brand Identity / Government Crest */}
-          <Link href="/" className="flex items-center space-x-3.5 rtl:space-x-reverse text-white group">
-            <div className="w-11 h-11 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center shadow-inner group-hover:bg-white/25 transition-all border border-white/20">
-              <Bike className="w-6 h-6 text-emerald-200 group-hover:scale-105 transition-transform" />
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 text-white group min-w-0">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center shadow-inner group-hover:bg-white/25 transition-all border border-white/20 flex-shrink-0">
+              <Bike className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-200 group-hover:scale-105 transition-transform" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-serif font-bold text-lg sm:text-xl tracking-tight text-white drop-shadow-sm">
-                  {t('portalTitle')}
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className="font-serif font-bold text-sm sm:text-lg lg:text-xl tracking-tight text-white drop-shadow-sm leading-tight line-clamp-2 sm:line-clamp-1">
+                  <span className="hidden xs:inline">{t('portalTitle')}</span>
+                  <span className="xs:hidden">Punjab E-Bike Portal</span>
                 </span>
-                <span className="hidden sm:inline-flex items-center gap-1 px-2.5 py-0.5 text-[11px] font-semibold bg-white/20 text-emerald-100 rounded-full border border-white/20 backdrop-blur-sm">
+                <span className="hidden md:inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-semibold bg-white/20 text-emerald-100 rounded-full border border-white/20 backdrop-blur-sm flex-shrink-0">
                   <Sparkles className="w-3 h-3 text-emerald-300" />
-                  <span>2026 Phase-I</span>
+                  <span>2026</span>
                 </span>
               </div>
-              <p className="text-xs text-emerald-100/80 font-normal tracking-wide hidden sm:block mt-0.5">
+              <p className="text-[10px] sm:text-xs text-emerald-100/80 font-normal tracking-wide hidden sm:block mt-0.5">
                 {t('subtitle')}
               </p>
             </div>
@@ -107,16 +108,16 @@ export default function Navbar() {
                 </button>
               </div>
             ) : (
-              <div className="flex items-center space-x-2.5 rtl:space-x-reverse">
+              <div className="flex items-center gap-1.5 sm:gap-2.5">
                 <Link
                   href="/login"
-                  className="px-4 py-2 text-xs sm:text-sm font-bold rounded-xl bg-white/15 hover:bg-white/25 text-white border border-white/25 transition-all shadow-sm"
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs font-bold rounded-xl bg-white/15 hover:bg-white/25 text-white border border-white/25 transition-all shadow-sm whitespace-nowrap"
                 >
                   {t('login')}
                 </Link>
                 <Link
                   href="/register"
-                  className="px-4 py-2 text-xs sm:text-sm font-bold rounded-xl bg-white text-[#0A6E66] hover:bg-emerald-50 transition-all shadow-md hover:shadow-lg"
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs font-bold rounded-xl bg-white text-[#0A6E66] hover:bg-emerald-50 transition-all shadow-md hover:shadow-lg whitespace-nowrap"
                 >
                   {t('register')}
                 </Link>

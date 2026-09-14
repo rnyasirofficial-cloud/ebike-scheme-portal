@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: '475px',  // Between mobile (320px) and sm (640px) — covers most phones
+      },
       colors: {
         'brand-green': '#1FA37B',
         'brand-blue': '#1565C0',
