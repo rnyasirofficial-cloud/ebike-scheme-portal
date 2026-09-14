@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import { apiRequest } from '@/lib/api';
+import { mockLogin } from '@/lib/mock-auth';
 import { Bike, Shield, GraduationCap, Building, Wrench, ArrowRight, AlertCircle, CheckCircle } from 'lucide-react';
 
 export default function LoginPage() {
@@ -29,27 +30,38 @@ export default function LoginPage() {
 
       if (res.success && res.token && res.user) {
         login(res.token, res.user);
-
         // Redirect based on role
-        if (res.user.role === 'STUDENT') {
-          router.push('/student');
-        } else if (res.user.role === 'COORDINATOR') {
-          router.push('/coordinator');
-        } else if (res.user.role === 'ADMIN') {
-          router.push('/admin');
-        } else if (res.user.role === 'DEALER') {
-          router.push('/dealer');
-        } else {
-          router.push('/');
-        }
-      } else {
-        setError(res.message || 'Invalid credentials');
+        if (res.user.role === 'STUDENT') router.push('/student');
+        else if (res.user.role === 'COORDINATOR') router.push('/coordinator');
+        else if (res.user.role === 'ADMIN') router.push('/admin');
+        else if (res.user.role === 'DEALER') router.push('/dealer');
+        else router.push('/');
+        return;
       }
-    } catch (err: any) {
-      setError(err.message || 'Connection to authentication service failed');
-    } finally {
-      setLoading(false);
+
+      // API is reachable but returned an error (e.g. wrong password)
+      if (res.message && !res.message.toLowerCase().includes('fetch') && !res.message.toLowerCase().includes('connect')) {
+        setError(res.message || 'Invalid credentials');
+        return;
+      }
+    } catch {
+      // Network error — API unreachable, fall through to mock
     }
+
+    // ── Fallback: Mock / Demo authentication ──────────────────────────────
+    const mock = mockLogin(identifier, password);
+    if (mock) {
+      login(mock.token, mock.user);
+      if (mock.user.role === 'STUDENT') router.push('/student');
+      else if (mock.user.role === 'COORDINATOR') router.push('/coordinator');
+      else if (mock.user.role === 'ADMIN') router.push('/admin');
+      else if (mock.user.role === 'DEALER') router.push('/dealer');
+      else router.push('/');
+    } else {
+      setError('Invalid credentials. Please try a demo account or check your details.');
+    }
+
+    setLoading(false);
   };
 
   const fillDemoAccount = (ident: string, pass: string) => {

@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { apiRequest } from './api';
 import { translations, Language } from './i18n';
+import { isMockToken, getMockUser } from './mock-auth';
 
 export interface User {
   id: string;
@@ -57,6 +58,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!savedToken) {
       setUser(null);
       setToken(null);
+      setIsLoading(false);
+      return;
+    }
+
+    // Mock/demo tokens — restore user from localStorage directly, no API call needed
+    if (isMockToken(savedToken)) {
+      const mockUser = getMockUser(savedToken);
+      if (mockUser) {
+        setUser(mockUser);
+        setToken(savedToken);
+      } else {
+        logout();
+      }
       setIsLoading(false);
       return;
     }

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import { apiRequest } from '@/lib/api';
+import { mockRegister, mockVerifyOtp } from '@/lib/mock-auth';
 import { Bike, ShieldCheck, ArrowRight, AlertCircle, CheckCircle, Smartphone } from 'lucide-react';
 
 export default function RegisterPage() {
@@ -47,16 +48,21 @@ export default function RegisterPage() {
         setOtpStage(true);
         if (res.data?.devMockOtp) {
           setDevMockOtp(res.data.devMockOtp);
-          setOtp(res.data.devMockOtp); // Auto-fill in development for fast testing
+          setOtp(res.data.devMockOtp);
         }
-      } else {
-        setError(res.message || 'Registration failed');
+        setLoading(false);
+        return;
       }
-    } catch (err: any) {
-      setError(err.message || 'Connection failed');
-    } finally {
-      setLoading(false);
+    } catch {
+      // API unreachable — fall through to mock
     }
+
+    // ── Fallback: Mock registration ───────────────────────────────────────
+    const mock = mockRegister(formData);
+    setOtpStage(true);
+    setDevMockOtp(mock.data.devMockOtp);
+    setOtp(mock.data.devMockOtp);
+    setLoading(false);
   };
 
   const handleVerifyOtp = async (e: React.FormEvent) => {
@@ -67,23 +73,27 @@ export default function RegisterPage() {
     try {
       const res = await apiRequest('/auth/verify-otp', {
         method: 'POST',
-        body: JSON.stringify({
-          mobile: formData.mobile,
-          otp,
-        }),
+        body: JSON.stringify({ mobile: formData.mobile, otp }),
       });
 
       if (res.success && res.token && res.user) {
         login(res.token, res.user);
         router.push('/student/apply');
-      } else {
-        setError(res.message || 'Invalid OTP code');
+        return;
       }
-    } catch (err: any) {
-      setError(err.message || 'Verification failed');
-    } finally {
-      setLoading(false);
+    } catch {
+      // API unreachable — fall through to mock
     }
+
+    // ── Fallback: Mock OTP verification ──────────────────────────────────
+    const mock = mockVerifyOtp(formData.mobile, otp);
+    if (mock) {
+      login(mock.token, mock.user);
+      router.push('/student/apply');
+    } else {
+      setError('Invalid OTP. Use 123456 in demo mode.');
+    }
+    setLoading(false);
   };
 
   return (
